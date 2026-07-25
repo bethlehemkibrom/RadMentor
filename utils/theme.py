@@ -2,12 +2,6 @@
 import streamlit as st
 
 
-"""
-RadMentor Design System v1.0
-Premium clinical interface styling
-"""
-
-
 PRIMARY = "#2563EB"
 PRIMARY_DARK = "#1D4ED8"
 
@@ -26,21 +20,19 @@ def apply_theme(accent_color=PRIMARY):
     <style>
 
     .stApp {{
-        background-color: {BACKGROUND};
-        color: {TEXT};
+        background-color:{BACKGROUND};
     }}
 
     section[data-testid="stSidebar"] {{
-        background-color: {CARD};
-        border-right: 1px solid {BORDER};
+        background-color:{CARD};
     }}
 
-    h1, h2, h3 {{
-        color: {TEXT};
+    h1,h2,h3 {{
+        color:{TEXT};
     }}
 
     .stButton button {{
-        background-color: {accent_color};
+        background-color:{accent_color};
         color:white;
         border-radius:10px;
         font-weight:600;
