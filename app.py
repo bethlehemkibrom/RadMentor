@@ -12,6 +12,8 @@ st.set_page_config(
 )
 
 
+# Theme
+
 current_color = get_accent_color()
 
 accent = st.sidebar.color_picker(
@@ -26,14 +28,16 @@ if accent != current_color:
 apply_theme(accent)
 
 
+# Premium design
+
 st.markdown(
 f"""
 <style>
 
-@keyframes fadeUp {{
+@keyframes appear {{
 from {{
 opacity:0;
-transform:translateY(40px);
+transform:translateY(30px);
 }}
 to {{
 opacity:1;
@@ -42,94 +46,94 @@ transform:translateY(0);
 }}
 
 @keyframes float {{
-0% {{transform:translateY(0);}}
-50% {{transform:translateY(-15px);}}
-100% {{transform:translateY(0);}}
+0%,100% {{
+transform:translateY(0);
 }}
-
-@keyframes moveBackground {{
-0% {{background-position:0% 50%;}}
-50% {{background-position:100% 50%;}}
-100% {{background-position:0% 50%;}}
+50% {{
+transform:translateY(-12px);
 }}
-
+}}
 
 .hero {{
-animation:fadeUp 1.2s ease;
+animation:appear 1.2s ease;
 
-background:linear-gradient(
-120deg,
+background:
+linear-gradient(
+135deg,
 #ffffff,
-#eff6ff,
-#dbeafe
+#f8fafc
 );
 
-background-size:300% 300%;
-animation:moveBackground 8s infinite;
+padding:70px 50px;
+border-radius:32px;
 
-padding:50px 30px;
-border-radius:35px;
-border-left:10px solid {accent};
+border:1px solid #e2e8f0;
 
 box-shadow:
-0 20px 50px rgba(0,0,0,0.08);
+0 20px 50px rgba(15,23,42,0.08);
 
-overflow:hidden;
+text-align:center;
 }}
 
 
-.icon {{
-font-size:70px;
+.medical-icon {{
+font-size:80px;
 animation:float 3s infinite;
 }}
 
 
-.title {{
-font-size:clamp(35px,6vw,60px);
-font-weight:900;
+.hero-title {{
+font-size:clamp(40px,6vw,70px);
+font-weight:800;
 color:{accent};
-word-wrap:break-word;
+letter-spacing:-2px;
 }}
 
 
-.subtitle {{
-font-size:clamp(16px,3vw,24px);
+.hero-text {{
+font-size:22px;
 color:#475569;
+max-width:800px;
+margin:auto;
 }}
 
 
-.feature {{
-animation:fadeUp 1.5s ease;
-
+.card {{
 background:white;
 
-padding:25px;
+border-radius:24px;
 
-border-radius:25px;
+padding:32px;
 
-min-height:170px;
-
-border:1px solid #e5e7eb;
+border:1px solid #e2e8f0;
 
 box-shadow:
-0 10px 30px rgba(0,0,0,0.06);
+0 10px 30px rgba(15,23,42,0.06);
+
+height:210px;
 
 transition:0.3s;
 
-overflow:hidden;
+animation:appear 1.5s ease;
 }}
 
 
-.feature:hover {{
-transform:translateY(-10px);
+.card:hover {{
+transform:translateY(-8px);
 box-shadow:
-0 20px 40px rgba(0,0,0,0.12);
+0 20px 45px rgba(15,23,42,0.12);
 }}
 
 
-.feature h3 {{
+.card h3 {{
 color:{accent};
-font-size:22px;
+}}
+
+
+.number {{
+font-size:42px;
+font-weight:800;
+color:{accent};
 }}
 
 
@@ -139,24 +143,35 @@ unsafe_allow_html=True
 )
 
 
+
+# Hero
+
 st.markdown(
 f"""
 <div class="hero">
 
-<div class="icon">
+<div class="medical-icon">
 🩻
 </div>
 
-<div class="title">
+
+<div class="hero-title">
 RadMentor
 </div>
 
-<div class="subtitle">
-Master radiology through cases, reflection, and intelligent learning
+
+<div class="hero-text">
+A personal radiology knowledge system built around
+cases, reflection, and lifelong learning.
 </div>
 
-<p style="font-size:18px;">
-Every image is a story. Every case is an opportunity to learn.
+
+<br>
+
+<p>
+Capture cases.
+Reflect on findings.
+Build diagnostic confidence.
 </p>
 
 </div>
@@ -168,24 +183,107 @@ unsafe_allow_html=True
 st.write("")
 
 
+# Three pillars
+
+st.markdown(
+"## The RadMentor Learning Model"
+)
+
+
 c1,c2,c3 = st.columns(3)
 
 
-for col,title,text in [
-    (c1,"Clinical Case Library",
-     "Organize imaging cases and build your personal knowledge base."),
-    (c2,"Smart Review",
-     "Revisit cases and strengthen diagnostic memory."),
-    (c3,"Professional Growth",
-     "Track your journey toward radiology mastery.")
-]:
+sections = [
+(
+"01",
+"Capture",
+"Save meaningful imaging cases, diagnoses, and teaching points."
+),
+(
+"02",
+"Reflect",
+"Document your reasoning and transform experience into knowledge."
+),
+(
+"03",
+"Master",
+"Develop stronger diagnostic confidence through structured review."
+)
+]
+
+
+for col,(num,title,text) in zip(
+    [c1,c2,c3],
+    sections
+):
 
     with col:
+
         st.markdown(
         f"""
-        <div class="feature">
+        <div class="card">
 
-        <h3>{title}</h3>
+        <div class="number">
+        {num}
+        </div>
+
+        <h3>
+        {title}
+        </h3>
+
+        <p>
+        {text}
+        </p>
+
+        </div>
+        """,
+        unsafe_allow_html=True
+        )
+
+
+st.write("")
+
+
+# Features
+
+st.markdown(
+"## Designed for Modern Radiology Education"
+)
+
+
+c1,c2,c3 = st.columns(3)
+
+
+features=[
+(
+"🩻 Clinical Case Library",
+"Build your personal archive of imaging knowledge."
+),
+(
+"📚 Smart Review",
+"Strengthen memory through repeated exposure."
+),
+(
+"📊 Learning Insights",
+"Understand your growth over time."
+)
+]
+
+
+for col,(title,text) in zip(
+    [c1,c2,c3],
+    features
+):
+
+    with col:
+
+        st.markdown(
+        f"""
+        <div class="card">
+
+        <h3>
+        {title}
+        </h3>
 
         <p>
         {text}
@@ -205,11 +303,11 @@ f"""
 <div class="hero">
 
 <h2 style="color:{accent};">
-Where images become expertise
+Built for the next generation of radiologists
 </h2>
 
-<p class="subtitle">
-A modern learning environment designed for future radiologists.
+<p class="hero-text">
+Where every image becomes a learning opportunity.
 </p>
 
 </div>
