@@ -12,9 +12,7 @@ st.set_page_config(
 )
 
 
-# --------------------
 # Theme
-# --------------------
 
 current_color = get_accent_color()
 
@@ -31,39 +29,33 @@ if accent != current_color:
 apply_theme(accent)
 
 
-# --------------------
-# Design system
-# --------------------
+
+# Premium CSS
 
 st.markdown(
 f"""
 <style>
 
-body {{
-font-family: Inter, sans-serif;
-}}
-
-
 .hero {{
 
 background:
-linear-gradient(135deg,#ffffff,#f0f7ff);
+linear-gradient(135deg,#ffffff,#eff6ff);
 
-padding:65px;
+padding:55px;
 
 border-radius:35px;
 
 border:1px solid #dbeafe;
 
 box-shadow:
-0 20px 50px rgba(15,23,42,.08);
+0 20px 45px rgba(15,23,42,.08);
 
 }}
 
 
 .hero h1 {{
 
-font-size:58px;
+font-size:55px;
 
 font-weight:800;
 
@@ -81,39 +73,37 @@ color:{accent};
 
 .hero p {{
 
-font-size:22px;
+font-size:21px;
 
 color:#475569;
 
-line-height:1.7;
-
-max-width:850px;
+line-height:1.6;
 
 }}
 
 
 
-.section-card {{
+.card {{
 
 background:white;
 
-padding:32px;
+padding:30px;
 
 border-radius:24px;
 
 border:1px solid #e2e8f0;
 
 box-shadow:
-0 10px 30px rgba(0,0,0,.05);
+0 8px 25px rgba(0,0,0,.05);
 
-height:220px;
+height:200px;
 
 transition:.3s;
 
 }}
 
 
-.section-card:hover {{
+.card:hover {{
 
 transform:translateY(-5px);
 
@@ -121,20 +111,18 @@ transform:translateY(-5px);
 
 
 
-.section-card h3 {{
+.card h3 {{
 
 color:{accent};
-
-font-size:24px;
 
 }}
 
 
 
-.learning {{
+.progress-card {{
 
 background:
-linear-gradient(135deg,{accent},#1e40af);
+linear-gradient(135deg,{accent},#1e3a8a);
 
 color:white;
 
@@ -146,15 +134,7 @@ border-radius:28px;
 
 
 
-.learning h2 {{
-
-color:white;
-
-}}
-
-
-
-.case {{
+.pearl {{
 
 background:#f8fafc;
 
@@ -162,23 +142,23 @@ padding:35px;
 
 border-radius:25px;
 
-border:1px solid #e2e8f0;
+border-left:6px solid {accent};
 
 }}
 
 
 
-.empty {{
-
-text-align:center;
-
-padding:45px;
+.activity {{
 
 background:white;
+
+padding:35px;
 
 border-radius:25px;
 
 border:1px dashed #cbd5e1;
+
+text-align:center;
 
 }}
 
@@ -194,30 +174,6 @@ color:#64748b;
 
 }}
 
-
-
-.fade {{
-
-animation:fade 1s ease;
-
-}}
-
-
-
-@keyframes fade {{
-
-from {{
-opacity:0;
-transform:translateY(20px);
-}}
-
-to {{
-opacity:1;
-transform:translateY(0);
-}}
-
-}}
-
 </style>
 """,
 unsafe_allow_html=True
@@ -225,23 +181,23 @@ unsafe_allow_html=True
 
 
 
-# --------------------
 # Hero
-# --------------------
 
 st.markdown(
 f"""
-<div class="hero fade">
+<div class="hero">
 
 <h1>
-Welcome to <span>RadMentor</span>
+Your radiology workspace
 </h1>
 
 <p>
-A case-based radiology learning platform designed
-to help you capture clinical experiences,
-organize imaging knowledge, and develop stronger
-diagnostic reasoning.
+Welcome back to <span>RadMentor</span>.
+</p>
+
+<p>
+Capture clinical experiences, organize imaging knowledge,
+and develop structured diagnostic reasoning.
 </p>
 
 </div>
@@ -254,46 +210,41 @@ unsafe_allow_html=True
 st.write("")
 
 
-# --------------------
-# Quick actions
-# --------------------
+# Quick access
 
-st.subheader("Your Workspace")
+st.subheader("Quick Access")
 
 
-a,b,c = st.columns(3)
+c1,c2,c3,c4 = st.columns(4)
 
 
-actions = [
+quick = [
 
-(
-"Add Cases",
-"Document important imaging cases and create your personal teaching archive."
-),
+("Add Case",
+"Document a new imaging case"),
 
-(
-"Review Library",
-"Return to previous cases and strengthen recognition of imaging patterns."
-),
+("Library",
+"Explore your cases"),
 
-(
-"Learning Dashboard",
-"Follow your progress and build structured radiology knowledge."
-)
+("Review",
+"Strengthen memory"),
+
+("Dashboard",
+"Track learning")
 
 ]
 
 
 for col,(title,text) in zip(
-[a,b,c],
-actions
+    [c1,c2,c3,c4],
+    quick
 ):
 
     with col:
 
         st.markdown(
         f"""
-        <div class="section-card">
+        <div class="card">
 
         <h3>{title}</h3>
 
@@ -309,28 +260,25 @@ actions
 st.write("")
 
 
-# --------------------
-# Learning focus
-# --------------------
+# Learning pathway
 
-st.subheader("Today's Learning Focus")
+st.subheader("Your Learning Path")
 
 
 st.markdown(
-"""
-<div class="learning">
+f"""
+<div class="progress-card">
 
 <h2>
-Chest X-ray Systematic Interpretation
+Radiology Foundation
 </h2>
 
 <p>
-Recommended activity:
-Review a structured approach to chest imaging.
+Current focus: Systematic image interpretation
 </p>
 
 <p>
-Estimated learning time: 10 minutes
+Progress: Getting started
 </p>
 
 </div>
@@ -343,28 +291,23 @@ unsafe_allow_html=True
 st.write("")
 
 
-# --------------------
-# Case of the day
-# --------------------
+# Clinical pearl
 
-st.subheader("Case of the Day")
+st.subheader("Clinical Pearl")
 
 
 st.markdown(
-"""
-<div class="case">
+f"""
+<div class="pearl">
 
-<h2>
-No featured case yet
-</h2>
-
-<p>
-A curated teaching case will appear here.
-</p>
+<h3>
+A systematic approach prevents missed findings.
+</h3>
 
 <p>
-Each case will help you connect imaging findings
-with clinical reasoning.
+Always review imaging in a consistent order:
+patient information, technique, anatomy,
+findings, and impression.
 </p>
 
 </div>
@@ -377,23 +320,21 @@ unsafe_allow_html=True
 st.write("")
 
 
-# --------------------
-# Empty library
-# --------------------
+# Recent activity
 
-st.subheader("Your Case Library")
+st.subheader("Recent Activity")
 
 
 st.markdown(
 """
-<div class="empty">
+<div class="activity">
 
-<h2>
-Start building your radiology library
-</h2>
+<h3>
+No activity yet
+</h3>
 
 <p>
-Your saved cases, reflections, and learning notes
+Your reviewed cases and learning progress
 will appear here.
 </p>
 
@@ -402,6 +343,9 @@ will appear here.
 unsafe_allow_html=True
 )
 
+
+
+st.write("")
 
 
 st.markdown(
@@ -413,7 +357,7 @@ RadMentor
 </h3>
 
 <p>
-Case-based learning for modern radiology education
+Case-based radiology learning platform
 </p>
 
 </div>
