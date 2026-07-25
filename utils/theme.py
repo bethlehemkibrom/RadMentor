@@ -1,47 +1,85 @@
 
-import streamlit as st
+"""
+RadMentor Design System v1.0
+Premium clinical interface styling
+"""
+
+PRIMARY = "#2563EB"
+PRIMARY_DARK = "#1D4ED8"
+
+BACKGROUND = "#F8FAFC"
+CARD = "#FFFFFF"
+
+TEXT = "#111827"
+TEXT_SECONDARY = "#6B7280"
+
+SUCCESS = "#10B981"
+WARNING = "#F59E0B"
+ERROR = "#EF4444"
+
+BORDER = "#E5E7EB"
 
 
-def apply_theme(accent_color="#C98295"):
+def apply_theme(accent_color=PRIMARY):
 
-    st.markdown(
-        f"""
-        <style>
+    st_css = f"""
+    <style>
 
-        .stApp {{
-            background-color: #FAF8F8;
-        }}
+    .stApp {{
+        background-color: {BACKGROUND};
+        color: {TEXT};
+        font-family: Inter, sans-serif;
+    }}
 
+    h1 {{
+        color: {TEXT};
+        font-size: 34px;
+        font-weight: 700;
+    }}
 
-        h1, h2, h3 {{
-            color: {accent_color} !important;
-        }}
+    h2 {{
+        color: {TEXT};
+        font-size: 24px;
+        font-weight: 600;
+    }}
 
+    h3 {{
+        color: {TEXT};
+        font-size: 18px;
+        font-weight: 600;
+    }}
 
-        .stButton button {{
-            background-color: {accent_color};
-            color: white;
-            border-radius: 12px;
-            border: none;
-            padding: 8px 16px;
-        }}
+    p {{
+        color: {TEXT_SECONDARY};
+    }}
 
+    section[data-testid="stSidebar"] {{
+        background-color: {CARD};
+        border-right: 1px solid {BORDER};
+    }}
 
-        .stMetric {{
-            background-color: white;
-            border-radius: 15px;
-            padding: 15px;
-            border-left: 6px solid {accent_color};
-        }}
+    div[data-testid="stMetric"] {{
+        background-color: {CARD};
+        border: 1px solid {BORDER};
+        border-radius: 12px;
+        padding: 16px;
+    }}
 
+    .stButton button {{
+        border-radius: 10px;
+        border: none;
+        background-color: {accent_color};
+        color: white;
+        font-weight: 600;
+        padding: 8px 18px;
+    }}
 
-        [data-testid="stSidebar"] {{
-            background-color: white;
-            border-right: 3px solid {accent_color};
-        }}
+    .block-container {{
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }}
 
+    </style>
+    """
 
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+    st.markdown(st_css, unsafe_allow_html=True)
