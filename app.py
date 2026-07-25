@@ -1,5 +1,6 @@
 
 import streamlit as st
+import os
 
 from utils.theme import apply_theme
 from utils.preferences import get_accent_color, save_accent_color
@@ -29,175 +30,142 @@ if accent != current_color:
 apply_theme(accent)
 
 
-# Premium design system
+# CSS
 
 st.markdown(
 f"""
 <style>
 
-.main {{
-    background:#f8fafc;
-}}
-
-
 .hero {{
 
-    background:
-    linear-gradient(135deg,#ffffff,#eef6ff);
+background:
+linear-gradient(120deg,#ffffff,#eef5ff);
 
-    padding:70px 60px;
+padding:70px;
 
-    border-radius:32px;
+border-radius:35px;
 
-    border:1px solid #e2e8f0;
+border:1px solid #dbeafe;
 
-    box-shadow:
-    0 20px 50px rgba(15,23,42,0.08);
-
-    animation:fadeIn 1s ease;
+box-shadow:
+0 20px 50px rgba(15,23,42,0.08);
 
 }}
 
 
 .hero h1 {{
 
-    font-size:64px;
+font-size:64px;
 
-    font-weight:800;
+font-weight:800;
 
-    color:#0f172a;
-
-    margin-bottom:15px;
+color:#0f172a;
 
 }}
 
 
-.hero span {{
+.hero h1 span {{
 
-    color:{accent};
+color:{accent};
 
 }}
 
 
 .hero p {{
 
-    font-size:23px;
+font-size:22px;
 
-    color:#475569;
+color:#475569;
 
-    max-width:850px;
+line-height:1.6;
 
-    line-height:1.6;
-
-}}
-
-
-.primary-button {{
-
-    background:{accent};
-
-    color:white;
-
-    padding:14px 28px;
-
-    border-radius:14px;
-
-    font-weight:600;
+max-width:850px;
 
 }}
 
 
 
-.feature-card {{
+.image-box {{
 
-    background:white;
+height:260px;
 
-    padding:35px;
+background:
+linear-gradient(135deg,#e0f2fe,#dbeafe);
 
-    border-radius:24px;
+border-radius:30px;
 
-    border:1px solid #e2e8f0;
+display:flex;
 
-    min-height:230px;
+align-items:center;
 
-    transition:0.3s;
+justify-content:center;
 
-}}
+font-size:22px;
 
-
-.feature-card:hover {{
-
-    transform:translateY(-6px);
-
-    box-shadow:
-    0 15px 35px rgba(0,0,0,0.08);
+color:#334155;
 
 }}
 
 
 
-.feature-title {{
+.card {{
 
-    font-size:22px;
+background:white;
 
-    font-weight:700;
+padding:35px;
 
-    color:#0f172a;
+border-radius:25px;
 
-}}
+border:1px solid #e2e8f0;
 
+height:220px;
 
-.feature-text {{
+box-shadow:
+0 10px 30px rgba(0,0,0,0.05);
 
-    color:#64748b;
-
-    font-size:17px;
-
-    line-height:1.6;
+transition:0.3s;
 
 }}
 
 
+.card:hover {{
 
-.empty-state {{
-
-    background:white;
-
-    padding:45px;
-
-    text-align:center;
-
-    border-radius:25px;
-
-    border:1px dashed #cbd5e1;
+transform:translateY(-5px);
 
 }}
 
+
+
+.card h3 {{
+
+color:{accent};
+
+}}
+
+
+
+.empty {{
+
+background:#ffffff;
+
+border-radius:25px;
+
+padding:45px;
+
+border:1px dashed #cbd5e1;
+
+text-align:center;
+
+}}
 
 
 .footer {{
 
-    text-align:center;
+text-align:center;
 
-    padding:40px;
+padding:40px;
 
-    color:#64748b;
-
-}}
-
-
-
-@keyframes fadeIn {{
-
-from {{
-opacity:0;
-transform:translateY(20px);
-}}
-
-to {{
-opacity:1;
-transform:translateY(0);
-}}
+color:#64748b;
 
 }}
 
@@ -208,86 +176,123 @@ unsafe_allow_html=True
 
 
 
-# Hero section
+# Hero
 
-st.markdown(
-f"""
-
-<div class="hero">
-
-<h1>
-Welcome to <span>RadMentor</span>
-</h1>
+left,right = st.columns([1.3,0.7])
 
 
-<p>
-A personal radiology learning workspace designed
-to help you capture cases, organize knowledge,
-and strengthen diagnostic reasoning.
-</p>
+with left:
+
+    st.markdown(
+    f"""
+    <div class="hero">
+
+    <h1>
+    Your radiology
+    <span>
+    learning workspace
+    </span>
+    </h1>
 
 
-</div>
+    <p>
+    Capture clinical cases, organize imaging knowledge,
+    and develop stronger diagnostic reasoning through
+    structured learning.
+    </p>
 
-""",
-unsafe_allow_html=True
-)
+    </div>
+    """,
+    unsafe_allow_html=True
+    )
+
+
+with right:
+
+    st.markdown(
+    """
+    <div class="image-box">
+
+    Radiology Workspace
+
+    </div>
+    """,
+    unsafe_allow_html=True
+    )
 
 
 
 st.write("")
 
 
-# Main actions
+# Buttons
 
-st.subheader(
-"Build your radiology knowledge"
-)
+st.subheader("Get started")
 
 
-col1,col2,col3 = st.columns(3)
+b1,b2,b3 = st.columns(3)
 
 
-features = [
+with b1:
 
-(
-"Case Library",
-"Capture important imaging cases, findings, diagnoses, and teaching points in one organized workspace."
-),
+    if st.button("Add a Case",use_container_width=True):
+        st.switch_page("pages/1_Add_Case.py")
 
-(
-"Learning Workspace",
-"Review cases, reflect on patterns, and develop a structured approach to interpretation."
-),
 
-(
-"Knowledge Growth",
-"Create your personal radiology memory system through continuous learning."
-)
+with b2:
+
+    if st.button("Explore Cases",use_container_width=True):
+        st.switch_page("pages/2_Case_Library.py")
+
+
+with b3:
+
+    if st.button("Learning Dashboard",use_container_width=True):
+        st.switch_page("pages/3_Learning_Dashboard.py")
+
+
+
+st.write("")
+
+
+# How it works
+
+st.subheader("How RadMentor works")
+
+
+c1,c2,c3 = st.columns(3)
+
+
+steps=[
+
+("Capture",
+"Save important imaging cases and clinical lessons."),
+
+("Review",
+"Return to cases and strengthen pattern recognition."),
+
+("Improve",
+"Build a personal radiology knowledge system.")
 
 ]
 
 
 for col,(title,text) in zip(
-    [col1,col2,col3],
-    features
+    [c1,c2,c3],
+    steps
 ):
 
     with col:
 
         st.markdown(
         f"""
-        <div class="feature-card">
+        <div class="card">
 
-        <div class="feature-title">
-        {title}
-        </div>
+        <h3>{title}</h3>
 
-        <br>
-
-        <div class="feature-text">
+        <p>
         {text}
-        </div>
+        </p>
 
         </div>
         """,
@@ -299,19 +304,17 @@ for col,(title,text) in zip(
 st.write("")
 
 
-# Empty state
+# Learning space
 
-st.subheader(
-"Your Learning Space"
-)
+st.subheader("Your Learning Space")
 
 
 st.markdown(
 """
-<div class="empty-state">
+<div class="empty">
 
 <h2>
-No cases yet
+Start building your library
 </h2>
 
 <p>
@@ -319,8 +322,7 @@ Your saved radiology cases will appear here.
 </p>
 
 <p>
-Start by adding your first case and build your
-personal imaging knowledge library.
+Every case becomes part of your personal diagnostic memory.
 </p>
 
 </div>
@@ -334,9 +336,11 @@ st.markdown(
 """
 <div class="footer">
 
-RadMentor  
+RadMentor
+
 <br>
-Structured learning for modern radiology education
+
+Structured radiology learning platform
 
 </div>
 """,
