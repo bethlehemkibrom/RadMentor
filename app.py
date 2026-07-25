@@ -91,10 +91,12 @@ letter-spacing:-2px;
 
 
 .hero-text {{
-font-size:22px;
+font-size:clamp(16px,2.5vw,22px);
 color:#475569;
 max-width:800px;
 margin:auto;
+line-height:1.6;
+word-wrap:break-word;
 }}
 
 
@@ -110,7 +112,10 @@ border:1px solid #e2e8f0;
 box-shadow:
 0 10px 30px rgba(15,23,42,0.06);
 
-height:210px;
+min-height:210px;
+height:auto;
+overflow:hidden;
+word-wrap:break-word;
 
 transition:0.3s;
 
