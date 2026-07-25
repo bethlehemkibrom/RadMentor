@@ -3,67 +3,68 @@ import streamlit as st
 
 from utils.theme import apply_theme
 from utils.preferences import get_accent_color, save_accent_color
-from utils.components import section_title, info_card
+from utils.components import section_title, info_card, stat_card
 
 
 st.set_page_config(
-    page_title="RadMentor",
+    page_title="RadMentor Dashboard",
     page_icon="R",
     layout="wide"
 )
 
 
-current_color = get_accent_color()
+# Theme
 
+current_color = get_accent_color()
 
 accent = st.sidebar.color_picker(
     "Accent colour",
     current_color
 )
 
-
 if accent != current_color:
     save_accent_color(accent)
     st.rerun()
 
-
 apply_theme(accent)
 
+
+# Sidebar
+
+st.sidebar.markdown(
+    """
+    ## RadMentor
+
+    Radiology learning workspace
+    """
+)
+
+
+# Hero
 
 st.markdown(
     f"""
     <div style="
         background:white;
-        padding:50px;
         border-radius:24px;
-        border:1px solid #E5E7EB;
+        padding:40px;
         border-left:8px solid {accent};
-        box-shadow:0 6px 20px rgba(0,0,0,0.06);
-        text-align:center;
+        border:1px solid #E5E7EB;
     ">
 
     <h1 style="
         color:{accent};
-        font-size:42px;
-        margin-bottom:10px;
+        font-size:40px;
     ">
-    RadMentor
+    Your Radiology Learning Dashboard
     </h1>
-
-    <h3 style="
-        color:#111827;
-        font-weight:500;
-    ">
-    Your personal radiology learning workspace
-    </h3>
 
     <p style="
         color:#6B7280;
         font-size:18px;
-        margin-top:20px;
     ">
-    Capture cases, review findings, track progress,
-    and build your personal radiology knowledge library.
+    Build knowledge through cases, reflection,
+    and structured review.
     </p>
 
     </div>
@@ -75,34 +76,75 @@ st.markdown(
 st.write("")
 
 
-section_title("Start Learning")
+# Statistics
+
+section_title("Learning Overview")
 
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
 
 
 with col1:
-    info_card(
-        "Add Cases",
-        "Save important radiology cases, findings, diagnoses, and teaching points."
+    stat_card(
+        "Saved Cases",
+        "0",
+        "Your radiology library"
     )
-
 
 with col2:
-    info_card(
-        "Review Library",
-        "Revisit previous cases and strengthen your diagnostic reasoning."
+    stat_card(
+        "Reviewed",
+        "0",
+        "Cases completed"
     )
-
 
 with col3:
-    info_card(
-        "Track Progress",
-        "Monitor your learning journey and identify areas for improvement."
+    stat_card(
+        "Learning Streak",
+        "0",
+        "Days active"
+    )
+
+with col4:
+    stat_card(
+        "Confidence",
+        "New",
+        "Diagnostic growth"
     )
 
 
-section_title("Why RadMentor?")
+# Quick actions
+
+section_title("Quick Actions")
+
+
+c1, c2, c3 = st.columns(3)
+
+
+with c1:
+    info_card(
+        "Add Case",
+        "Capture a new radiology case with diagnosis, findings, and learning points."
+    )
+
+
+with c2:
+    info_card(
+        "Review Library",
+        "Return to previous cases and strengthen memory through repetition."
+    )
+
+
+with c3:
+    info_card(
+        "Learning Dashboard",
+        "Understand your progress and identify areas for improvement."
+    )
+
+
+# Recent learning
+
+section_title("Recent Learning")
 
 
 st.markdown(
@@ -111,16 +153,13 @@ st.markdown(
         background:white;
         border:1px solid #E5E7EB;
         border-radius:16px;
-        padding:24px;
-        color:#374151;
-        font-size:16px;
+        padding:25px;
+        color:#6B7280;
     ">
 
-    Radiology expertise develops through exposure,
-    reflection, and repetition.
+    No recent cases yet.
 
-    RadMentor helps transform individual cases into
-    a structured learning system that grows with you.
+    Start building your personal radiology knowledge library.
 
     </div>
     """,
