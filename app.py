@@ -12,7 +12,6 @@ st.set_page_config(
 )
 
 
-# Theme
 current_color = get_accent_color()
 
 accent = st.sidebar.color_picker(
@@ -27,77 +26,118 @@ if accent != current_color:
 apply_theme(accent)
 
 
-# Premium animations + styling
-
 st.markdown(
 f"""
 <style>
 
-@keyframes fade {{
-0% {{
+@keyframes fadeUp {{
+from {{
 opacity:0;
-transform:translateY(25px);
+transform:translateY(40px);
 }}
-
-100% {{
+to {{
 opacity:1;
 transform:translateY(0);
 }}
 }}
 
 @keyframes float {{
-0% {{transform:translateY(0px);}}
-50% {{transform:translateY(-12px);}}
-100% {{transform:translateY(0px);}}
+0% {{transform:translateY(0);}}
+50% {{transform:translateY(-15px);}}
+100% {{transform:translateY(0);}}
 }}
+
+@keyframes moveBackground {{
+0% {{background-position:0% 50%;}}
+50% {{background-position:100% 50%;}}
+100% {{background-position:0% 50%;}}
+}}
+
 
 .hero {{
-animation:fade 1.2s ease;
-background:linear-gradient(135deg,#ffffff,#eff6ff);
-padding:70px 40px;
+animation:fadeUp 1.2s ease;
+
+background:linear-gradient(
+120deg,
+#ffffff,
+#eff6ff,
+#dbeafe
+);
+
+background-size:300% 300%;
+animation:moveBackground 8s infinite;
+
+padding:50px 30px;
 border-radius:35px;
-text-align:center;
 border-left:10px solid {accent};
-box-shadow:0 20px 50px rgba(0,0,0,0.08);
+
+box-shadow:
+0 20px 50px rgba(0,0,0,0.08);
+
+overflow:hidden;
 }}
 
+
 .icon {{
-font-size:90px;
+font-size:70px;
 animation:float 3s infinite;
 }}
 
+
 .title {{
-font-size:60px;
+font-size:clamp(35px,6vw,60px);
 font-weight:900;
 color:{accent};
+word-wrap:break-word;
 }}
 
+
 .subtitle {{
-font-size:24px;
+font-size:clamp(16px,3vw,24px);
 color:#475569;
 }}
 
+
 .feature {{
+animation:fadeUp 1.5s ease;
+
 background:white;
-padding:30px;
+
+padding:25px;
+
 border-radius:25px;
-height:190px;
+
+min-height:170px;
+
 border:1px solid #e5e7eb;
-box-shadow:0 10px 30px rgba(0,0,0,0.06);
-animation:fade 1.5s ease;
+
+box-shadow:
+0 10px 30px rgba(0,0,0,0.06);
+
+transition:0.3s;
+
+overflow:hidden;
 }}
+
+
+.feature:hover {{
+transform:translateY(-10px);
+box-shadow:
+0 20px 40px rgba(0,0,0,0.12);
+}}
+
 
 .feature h3 {{
 color:{accent};
+font-size:22px;
 }}
+
 
 </style>
 """,
 unsafe_allow_html=True
 )
 
-
-# Hero
 
 st.markdown(
 f"""
@@ -115,11 +155,8 @@ RadMentor
 Master radiology through cases, reflection, and intelligent learning
 </div>
 
-<br>
-
-<p style="font-size:19px;">
-Your personal radiology knowledge companion.
-Capture cases. Review findings. Grow confidence.
+<p style="font-size:18px;">
+Every image is a story. Every case is an opportunity to learn.
 </p>
 
 </div>
@@ -131,53 +168,33 @@ unsafe_allow_html=True
 st.write("")
 
 
-# Feature cards
-
 c1,c2,c3 = st.columns(3)
 
 
-with c1:
-    st.markdown(
-    f"""
-    <div class="feature">
-    <h3>Clinical Case Library</h3>
-    <p>
-    Build your own collection of imaging cases
-    and teaching points.
-    </p>
-    </div>
-    """,
-    unsafe_allow_html=True
-    )
+for col,title,text in [
+    (c1,"Clinical Case Library",
+     "Organize imaging cases and build your personal knowledge base."),
+    (c2,"Smart Review",
+     "Revisit cases and strengthen diagnostic memory."),
+    (c3,"Professional Growth",
+     "Track your journey toward radiology mastery.")
+]:
 
+    with col:
+        st.markdown(
+        f"""
+        <div class="feature">
 
-with c2:
-    st.markdown(
-    f"""
-    <div class="feature">
-    <h3>Smart Review</h3>
-    <p>
-    Strengthen memory through structured
-    case repetition.
-    </p>
-    </div>
-    """,
-    unsafe_allow_html=True
-    )
+        <h3>{title}</h3>
 
+        <p>
+        {text}
+        </p>
 
-with c3:
-    st.markdown(
-    f"""
-    <div class="feature">
-    <h3>Professional Growth</h3>
-    <p>
-    Track your journey toward diagnostic confidence.
-    </p>
-    </div>
-    """,
-    unsafe_allow_html=True
-    )
+        </div>
+        """,
+        unsafe_allow_html=True
+        )
 
 
 st.write("")
@@ -188,11 +205,11 @@ f"""
 <div class="hero">
 
 <h2 style="color:{accent};">
-Built for the next generation of radiologists
+Where images become expertise
 </h2>
 
 <p class="subtitle">
-A place where every image becomes a learning opportunity.
+A modern learning environment designed for future radiologists.
 </p>
 
 </div>
