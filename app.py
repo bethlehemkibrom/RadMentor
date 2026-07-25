@@ -3,18 +3,16 @@ import streamlit as st
 
 from utils.theme import apply_theme
 from utils.preferences import get_accent_color, save_accent_color
-from utils.components import section_title, info_card, stat_card
 
 
 st.set_page_config(
-    page_title="RadMentor Dashboard",
-    page_icon="R",
+    page_title="RadMentor",
+    page_icon="🩻",
     layout="wide"
 )
 
 
 # Theme
-
 current_color = get_accent_color()
 
 accent = st.sidebar.color_picker(
@@ -29,139 +27,175 @@ if accent != current_color:
 apply_theme(accent)
 
 
-# Sidebar
+# Premium animations + styling
 
-st.sidebar.markdown(
-    """
-    ## RadMentor
+st.markdown(
+f"""
+<style>
 
-    Radiology learning workspace
-    """
+@keyframes fade {{
+0% {{
+opacity:0;
+transform:translateY(25px);
+}}
+
+100% {{
+opacity:1;
+transform:translateY(0);
+}}
+}}
+
+@keyframes float {{
+0% {{transform:translateY(0px);}}
+50% {{transform:translateY(-12px);}}
+100% {{transform:translateY(0px);}}
+}}
+
+.hero {{
+animation:fade 1.2s ease;
+background:linear-gradient(135deg,#ffffff,#eff6ff);
+padding:70px 40px;
+border-radius:35px;
+text-align:center;
+border-left:10px solid {accent};
+box-shadow:0 20px 50px rgba(0,0,0,0.08);
+}}
+
+.icon {{
+font-size:90px;
+animation:float 3s infinite;
+}}
+
+.title {{
+font-size:60px;
+font-weight:900;
+color:{accent};
+}}
+
+.subtitle {{
+font-size:24px;
+color:#475569;
+}}
+
+.feature {{
+background:white;
+padding:30px;
+border-radius:25px;
+height:190px;
+border:1px solid #e5e7eb;
+box-shadow:0 10px 30px rgba(0,0,0,0.06);
+animation:fade 1.5s ease;
+}}
+
+.feature h3 {{
+color:{accent};
+}}
+
+</style>
+""",
+unsafe_allow_html=True
 )
 
 
 # Hero
 
 st.markdown(
-    f"""
-    <div style="
-        background:white;
-        border-radius:24px;
-        padding:40px;
-        border-left:8px solid {accent};
-        border:1px solid #E5E7EB;
-    ">
+f"""
+<div class="hero">
 
-    <h1 style="
-        color:{accent};
-        font-size:40px;
-    ">
-    Your Radiology Learning Dashboard
-    </h1>
+<div class="icon">
+🩻
+</div>
 
-    <p style="
-        color:#6B7280;
-        font-size:18px;
-    ">
-    Build knowledge through cases, reflection,
-    and structured review.
-    </p>
+<div class="title">
+RadMentor
+</div>
 
-    </div>
-    """,
-    unsafe_allow_html=True
+<div class="subtitle">
+Master radiology through cases, reflection, and intelligent learning
+</div>
+
+<br>
+
+<p style="font-size:19px;">
+Your personal radiology knowledge companion.
+Capture cases. Review findings. Grow confidence.
+</p>
+
+</div>
+""",
+unsafe_allow_html=True
 )
 
 
 st.write("")
 
 
-# Statistics
+# Feature cards
 
-section_title("Learning Overview")
-
-
-col1, col2, col3, col4 = st.columns(4)
-
-
-with col1:
-    stat_card(
-        "Saved Cases",
-        "0",
-        "Your radiology library"
-    )
-
-with col2:
-    stat_card(
-        "Reviewed",
-        "0",
-        "Cases completed"
-    )
-
-with col3:
-    stat_card(
-        "Learning Streak",
-        "0",
-        "Days active"
-    )
-
-with col4:
-    stat_card(
-        "Confidence",
-        "New",
-        "Diagnostic growth"
-    )
-
-
-# Quick actions
-
-section_title("Quick Actions")
-
-
-c1, c2, c3 = st.columns(3)
+c1,c2,c3 = st.columns(3)
 
 
 with c1:
-    info_card(
-        "Add Case",
-        "Capture a new radiology case with diagnosis, findings, and learning points."
+    st.markdown(
+    f"""
+    <div class="feature">
+    <h3>Clinical Case Library</h3>
+    <p>
+    Build your own collection of imaging cases
+    and teaching points.
+    </p>
+    </div>
+    """,
+    unsafe_allow_html=True
     )
 
 
 with c2:
-    info_card(
-        "Review Library",
-        "Return to previous cases and strengthen memory through repetition."
+    st.markdown(
+    f"""
+    <div class="feature">
+    <h3>Smart Review</h3>
+    <p>
+    Strengthen memory through structured
+    case repetition.
+    </p>
+    </div>
+    """,
+    unsafe_allow_html=True
     )
 
 
 with c3:
-    info_card(
-        "Learning Dashboard",
-        "Understand your progress and identify areas for improvement."
-    )
-
-
-# Recent learning
-
-section_title("Recent Learning")
-
-
-st.markdown(
-    """
-    <div style="
-        background:white;
-        border:1px solid #E5E7EB;
-        border-radius:16px;
-        padding:25px;
-        color:#6B7280;
-    ">
-
-    No recent cases yet.
-
-    Start building your personal radiology knowledge library.
-
+    st.markdown(
+    f"""
+    <div class="feature">
+    <h3>Professional Growth</h3>
+    <p>
+    Track your journey toward diagnostic confidence.
+    </p>
     </div>
     """,
     unsafe_allow_html=True
+    )
+
+
+st.write("")
+
+
+st.markdown(
+f"""
+<div class="hero">
+
+<h2 style="color:{accent};">
+Built for the next generation of radiologists
+</h2>
+
+<p class="subtitle">
+A place where every image becomes a learning opportunity.
+</p>
+
+</div>
+""",
+unsafe_allow_html=True
 )
