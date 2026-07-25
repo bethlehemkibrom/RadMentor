@@ -1,6 +1,5 @@
 
 import streamlit as st
-import os
 
 from utils.theme import apply_theme
 from utils.preferences import get_accent_color, save_accent_color
@@ -13,7 +12,9 @@ st.set_page_config(
 )
 
 
+# --------------------
 # Theme
+# --------------------
 
 current_color = get_accent_color()
 
@@ -30,32 +31,39 @@ if accent != current_color:
 apply_theme(accent)
 
 
-# CSS
+# --------------------
+# Design system
+# --------------------
 
 st.markdown(
 f"""
 <style>
 
+body {{
+font-family: Inter, sans-serif;
+}}
+
+
 .hero {{
 
 background:
-linear-gradient(120deg,#ffffff,#eef5ff);
+linear-gradient(135deg,#ffffff,#f0f7ff);
 
-padding:70px;
+padding:65px;
 
 border-radius:35px;
 
 border:1px solid #dbeafe;
 
 box-shadow:
-0 20px 50px rgba(15,23,42,0.08);
+0 20px 50px rgba(15,23,42,.08);
 
 }}
 
 
 .hero h1 {{
 
-font-size:64px;
+font-size:58px;
 
 font-weight:800;
 
@@ -64,7 +72,7 @@ color:#0f172a;
 }}
 
 
-.hero h1 span {{
+.hero span {{
 
 color:{accent};
 
@@ -77,7 +85,7 @@ font-size:22px;
 
 color:#475569;
 
-line-height:1.6;
+line-height:1.7;
 
 max-width:850px;
 
@@ -85,50 +93,27 @@ max-width:850px;
 
 
 
-.image-box {{
-
-height:260px;
-
-background:
-linear-gradient(135deg,#e0f2fe,#dbeafe);
-
-border-radius:30px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:22px;
-
-color:#334155;
-
-}}
-
-
-
-.card {{
+.section-card {{
 
 background:white;
 
-padding:35px;
+padding:32px;
 
-border-radius:25px;
+border-radius:24px;
 
 border:1px solid #e2e8f0;
 
+box-shadow:
+0 10px 30px rgba(0,0,0,.05);
+
 height:220px;
 
-box-shadow:
-0 10px 30px rgba(0,0,0,0.05);
-
-transition:0.3s;
+transition:.3s;
 
 }}
 
 
-.card:hover {{
+.section-card:hover {{
 
 transform:translateY(-5px);
 
@@ -136,9 +121,48 @@ transform:translateY(-5px);
 
 
 
-.card h3 {{
+.section-card h3 {{
 
 color:{accent};
+
+font-size:24px;
+
+}}
+
+
+
+.learning {{
+
+background:
+linear-gradient(135deg,{accent},#1e40af);
+
+color:white;
+
+padding:35px;
+
+border-radius:28px;
+
+}}
+
+
+
+.learning h2 {{
+
+color:white;
+
+}}
+
+
+
+.case {{
+
+background:#f8fafc;
+
+padding:35px;
+
+border-radius:25px;
+
+border:1px solid #e2e8f0;
 
 }}
 
@@ -146,26 +170,51 @@ color:{accent};
 
 .empty {{
 
-background:#ffffff;
-
-border-radius:25px;
+text-align:center;
 
 padding:45px;
 
+background:white;
+
+border-radius:25px;
+
 border:1px dashed #cbd5e1;
 
-text-align:center;
-
 }}
+
 
 
 .footer {{
 
 text-align:center;
 
-padding:40px;
+padding:50px;
 
 color:#64748b;
+
+}}
+
+
+
+.fade {{
+
+animation:fade 1s ease;
+
+}}
+
+
+
+@keyframes fade {{
+
+from {{
+opacity:0;
+transform:translateY(20px);
+}}
+
+to {{
+opacity:1;
+transform:translateY(0);
+}}
 
 }}
 
@@ -176,123 +225,79 @@ unsafe_allow_html=True
 
 
 
+# --------------------
 # Hero
+# --------------------
 
-left,right = st.columns([1.3,0.7])
+st.markdown(
+f"""
+<div class="hero fade">
 
+<h1>
+Welcome to <span>RadMentor</span>
+</h1>
 
-with left:
+<p>
+A case-based radiology learning platform designed
+to help you capture clinical experiences,
+organize imaging knowledge, and develop stronger
+diagnostic reasoning.
+</p>
 
-    st.markdown(
-    f"""
-    <div class="hero">
-
-    <h1>
-    Your radiology
-    <span>
-    learning workspace
-    </span>
-    </h1>
-
-
-    <p>
-    Capture clinical cases, organize imaging knowledge,
-    and develop stronger diagnostic reasoning through
-    structured learning.
-    </p>
-
-    </div>
-    """,
-    unsafe_allow_html=True
-    )
-
-
-with right:
-
-    st.markdown(
-    """
-    <div class="image-box">
-
-    Radiology Workspace
-
-    </div>
-    """,
-    unsafe_allow_html=True
-    )
+</div>
+""",
+unsafe_allow_html=True
+)
 
 
 
 st.write("")
 
 
-# Buttons
+# --------------------
+# Quick actions
+# --------------------
 
-st.subheader("Get started")
-
-
-b1,b2,b3 = st.columns(3)
-
-
-with b1:
-
-    if st.button("Add a Case",use_container_width=True):
-        st.switch_page("pages/1_Add_Case.py")
+st.subheader("Your Workspace")
 
 
-with b2:
-
-    if st.button("Explore Cases",use_container_width=True):
-        st.switch_page("pages/2_Case_Library.py")
+a,b,c = st.columns(3)
 
 
-with b3:
+actions = [
 
-    if st.button("Learning Dashboard",use_container_width=True):
-        st.switch_page("pages/3_Learning_Dashboard.py")
+(
+"Add Cases",
+"Document important imaging cases and create your personal teaching archive."
+),
 
+(
+"Review Library",
+"Return to previous cases and strengthen recognition of imaging patterns."
+),
 
-
-st.write("")
-
-
-# How it works
-
-st.subheader("How RadMentor works")
-
-
-c1,c2,c3 = st.columns(3)
-
-
-steps=[
-
-("Capture",
-"Save important imaging cases and clinical lessons."),
-
-("Review",
-"Return to cases and strengthen pattern recognition."),
-
-("Improve",
-"Build a personal radiology knowledge system.")
+(
+"Learning Dashboard",
+"Follow your progress and build structured radiology knowledge."
+)
 
 ]
 
 
 for col,(title,text) in zip(
-    [c1,c2,c3],
-    steps
+[a,b,c],
+actions
 ):
 
     with col:
 
         st.markdown(
         f"""
-        <div class="card">
+        <div class="section-card">
 
         <h3>{title}</h3>
 
-        <p>
-        {text}
-        </p>
+        <p>{text}</p>
 
         </div>
         """,
@@ -304,9 +309,79 @@ for col,(title,text) in zip(
 st.write("")
 
 
-# Learning space
+# --------------------
+# Learning focus
+# --------------------
 
-st.subheader("Your Learning Space")
+st.subheader("Today's Learning Focus")
+
+
+st.markdown(
+"""
+<div class="learning">
+
+<h2>
+Chest X-ray Systematic Interpretation
+</h2>
+
+<p>
+Recommended activity:
+Review a structured approach to chest imaging.
+</p>
+
+<p>
+Estimated learning time: 10 minutes
+</p>
+
+</div>
+""",
+unsafe_allow_html=True
+)
+
+
+
+st.write("")
+
+
+# --------------------
+# Case of the day
+# --------------------
+
+st.subheader("Case of the Day")
+
+
+st.markdown(
+"""
+<div class="case">
+
+<h2>
+No featured case yet
+</h2>
+
+<p>
+A curated teaching case will appear here.
+</p>
+
+<p>
+Each case will help you connect imaging findings
+with clinical reasoning.
+</p>
+
+</div>
+""",
+unsafe_allow_html=True
+)
+
+
+
+st.write("")
+
+
+# --------------------
+# Empty library
+# --------------------
+
+st.subheader("Your Case Library")
 
 
 st.markdown(
@@ -314,15 +389,12 @@ st.markdown(
 <div class="empty">
 
 <h2>
-Start building your library
+Start building your radiology library
 </h2>
 
 <p>
-Your saved radiology cases will appear here.
-</p>
-
-<p>
-Every case becomes part of your personal diagnostic memory.
+Your saved cases, reflections, and learning notes
+will appear here.
 </p>
 
 </div>
@@ -336,11 +408,13 @@ st.markdown(
 """
 <div class="footer">
 
+<h3>
 RadMentor
+</h3>
 
-<br>
-
-Structured radiology learning platform
+<p>
+Case-based learning for modern radiology education
+</p>
 
 </div>
 """,
