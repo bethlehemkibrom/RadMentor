@@ -13,21 +13,20 @@ st.set_page_config(
 if "user" not in st.session_state:
     st.session_state.user = None
 
+if "show_reset" not in st.session_state:
+    st.session_state.show_reset = False
+
 
 st.title("RadMentor Account")
 
 
-email = st.text_input(
-    "Email"
-)
+email = st.text_input("Email")
 
 password = st.text_input(
     "Password",
     type="password"
 )
 
-
-# Create account
 
 if st.button("Create Account"):
 
@@ -36,7 +35,6 @@ if st.button("Create Account"):
 
     else:
         try:
-
             supabase.auth.sign_up(
                 {
                     "email": email,
@@ -44,18 +42,13 @@ if st.button("Create Account"):
                 }
             )
 
-            st.success(
-                "Account created successfully."
-            )
+            st.success("Account created successfully.")
 
         except Exception:
-
             st.warning(
-                "Unable to create account. Please check your details."
+                "Unable to create account."
             )
 
-
-# Login
 
 if st.button("Login"):
 
@@ -76,9 +69,8 @@ if st.button("Login"):
                 }
             )
 
-
             st.session_state.user = response.user
-
+            st.session_state.show_reset = False
 
             st.success(
                 "Welcome to RadMentor"
@@ -87,53 +79,41 @@ if st.button("Login"):
 
         except Exception:
 
-            st.warning(
-                "Incorrect email or password. Please try again."
-            )
-
-
-# Forgot password
-
-st.divider()
-
-st.subheader("Password recovery")
-
-
-reset_email = st.text_input(
-    "Enter your email to reset password",
-    key="reset_email"
-)
-
-
-if st.button("Send Password Reset Link"):
-
-    if supabase is None:
-
-        st.error(
-            "Supabase is not connected."
-        )
-
-    else:
-
-        try:
-
-            supabase.auth.reset_password_email(
-                reset_email
-            )
-
-            st.success(
-                "Password reset link sent. Check your email."
-            )
-
-
-        except Exception:
+            st.session_state.show_reset = True
 
             st.warning(
-                "Unable to send reset link. Check your email address."
+                "Incorrect email or password."
             )
 
 
-# Logged in user
+if st.session_state.show_reset:
+
+    if st.button("Forgot password?"):
+
+        if not email:
+
+            st.warning(
+                "Please enter your email first."
+            )
+
+        else:
+
+            try:
+
+                supabase.auth.reset_password_email(
+                    email
+                )
+
+                st.success(
+                    "Password reset link sent. Check your email."
+                )
+
+            except Exception:
+
+                st.warning(
+                    "Unable to send reset email."
+                )
+
 
 if st.session_state.user:
 
