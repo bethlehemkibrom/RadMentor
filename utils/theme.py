@@ -1,8 +1,12 @@
 
+import streamlit as st
+
+
 """
 RadMentor Design System v1.0
 Premium clinical interface styling
 """
+
 
 PRIMARY = "#2563EB"
 PRIMARY_DARK = "#1D4ED8"
@@ -12,10 +16,6 @@ CARD = "#FFFFFF"
 
 TEXT = "#111827"
 TEXT_SECONDARY = "#6B7280"
-
-SUCCESS = "#10B981"
-WARNING = "#F59E0B"
-ERROR = "#EF4444"
 
 BORDER = "#E5E7EB"
 
@@ -28,29 +28,6 @@ def apply_theme(accent_color=PRIMARY):
     .stApp {{
         background-color: {BACKGROUND};
         color: {TEXT};
-        font-family: Inter, sans-serif;
-    }}
-
-    h1 {{
-        color: {TEXT};
-        font-size: 34px;
-        font-weight: 700;
-    }}
-
-    h2 {{
-        color: {TEXT};
-        font-size: 24px;
-        font-weight: 600;
-    }}
-
-    h3 {{
-        color: {TEXT};
-        font-size: 18px;
-        font-weight: 600;
-    }}
-
-    p {{
-        color: {TEXT_SECONDARY};
     }}
 
     section[data-testid="stSidebar"] {{
@@ -58,28 +35,21 @@ def apply_theme(accent_color=PRIMARY):
         border-right: 1px solid {BORDER};
     }}
 
-    div[data-testid="stMetric"] {{
-        background-color: {CARD};
-        border: 1px solid {BORDER};
-        border-radius: 12px;
-        padding: 16px;
+    h1, h2, h3 {{
+        color: {TEXT};
     }}
 
     .stButton button {{
-        border-radius: 10px;
-        border: none;
         background-color: {accent_color};
-        color: white;
-        font-weight: 600;
-        padding: 8px 18px;
-    }}
-
-    .block-container {{
-        padding-top: 2rem;
-        padding-bottom: 2rem;
+        color:white;
+        border-radius:10px;
+        font-weight:600;
     }}
 
     </style>
     """
 
-    st.markdown(st_css, unsafe_allow_html=True)
+    st.markdown(
+        st_css,
+        unsafe_allow_html=True
+    )
