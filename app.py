@@ -13,9 +13,7 @@ st.set_page_config(
 )
 
 
-# --------------------
 # Theme
-# --------------------
 
 current_color = get_accent_color()
 
@@ -32,24 +30,14 @@ if accent != current_color:
 apply_theme(accent)
 
 
+# User
 
-# --------------------
-# Get user
-# --------------------
-
-user = st.session_state.get(
-    "user",
-    None
-)
+user = st.session_state.get("user", None)
 
 
-
-# --------------------
 # Load cases
-# --------------------
 
 cases = []
-
 
 if user and supabase:
 
@@ -75,113 +63,75 @@ if user and supabase:
 
 
 
-# --------------------
 # CSS
-# --------------------
 
 st.markdown(
 f"""
 <style>
 
 .hero {{
-
-background:
-linear-gradient(135deg,#ffffff,#eff6ff);
-
+background:linear-gradient(135deg,#ffffff,#eff6ff);
 padding:60px;
-
 border-radius:35px;
-
 border:1px solid #dbeafe;
-
-box-shadow:
-0 20px 45px rgba(15,23,42,.08);
-
+box-shadow:0 20px 45px rgba(15,23,42,.08);
 }}
-
 
 .hero h1 {{
-
 font-size:58px;
-
+font-weight:800;
 color:#0f172a;
-
 }}
-
 
 .hero span {{
-
 color:{accent};
-
 }}
-
 
 .hero p {{
-
 font-size:22px;
-
 color:#475569;
-
+line-height:1.6;
 }}
-
-
 
 .card {{
-
 background:white;
-
 padding:30px;
-
 border-radius:24px;
-
 border:1px solid #e2e8f0;
-
-box-shadow:
-0 8px 25px rgba(0,0,0,.05);
-
+box-shadow:0 8px 25px rgba(0,0,0,.05);
+min-height:180px;
 }}
 
-
+.card h3 {{
+color:{accent};
+}}
 
 .metric {{
-
 font-size:42px;
-
 font-weight:800;
-
 color:{accent};
-
 }}
-
 
 .case-card {{
-
 background:#f8fafc;
-
 padding:25px;
-
 border-radius:20px;
-
 border:1px solid #e2e8f0;
-
 }}
-
-
 
 .empty {{
-
 padding:40px;
-
 text-align:center;
-
-border-radius:25px;
-
 background:white;
-
+border-radius:25px;
 border:1px dashed #cbd5e1;
-
 }}
 
+.footer {{
+text-align:center;
+padding:50px;
+color:#64748b;
+}}
 
 </style>
 """,
@@ -190,64 +140,47 @@ unsafe_allow_html=True
 
 
 
-# --------------------
-# Header
-# --------------------
+# Hero
 
 if user:
 
-    st.markdown(
-    f"""
-    <div class="hero">
-
-    <h1>
-    Welcome back
-    </h1>
-
-    <p>
-    Your personal radiology learning workspace.
-    </p>
-
-    </div>
-    """,
-    unsafe_allow_html=True
-    )
+    title = "Welcome back"
+    subtitle = "Your personal radiology learning workspace."
 
 else:
 
-    st.markdown(
-    f"""
-    <div class="hero">
-
-    <h1>
-    Your radiology
-    <span>
-    learning workspace
-    </span>
-    </h1>
-
-    <p>
-    Capture cases, organize imaging knowledge,
-    and develop stronger diagnostic reasoning.
-    </p>
-
-    </div>
-    """,
-    unsafe_allow_html=True
+    title = "Your radiology <span>learning workspace</span>"
+    subtitle = (
+        "Capture cases, organize imaging knowledge, "
+        "and develop stronger diagnostic reasoning."
     )
 
+
+st.markdown(
+f"""
+<div class="hero">
+
+<h1>
+{title}
+</h1>
+
+<p>
+{subtitle}
+</p>
+
+</div>
+""",
+unsafe_allow_html=True
+)
 
 
 st.write("")
 
 
 
-# --------------------
-# Logged in dashboard
-# --------------------
+# Dashboard for logged in users
 
 if user:
-
 
     st.subheader(
         "Your Imaging Knowledge Base"
@@ -267,7 +200,9 @@ if user:
         {len(cases)}
         </div>
 
+        <p>
         Cases collected
+        </p>
 
         </div>
         """,
@@ -277,30 +212,27 @@ if user:
 
     with c2:
 
-        modalities = len(
+        modality_count = len(
             set(
-                [
-                    c.get(
-                        "modality"
-                    )
-                    for c in cases
-                ]
+                case.get("modality")
+                for case in cases
+                if case.get("modality")
             )
-        ) if cases else 0
-
+        )
 
         st.markdown(
         f"""
         <div class="card">
 
         <div class="metric">
-        {modalities}
+        {modality_count}
         </div>
 
+        <p>
+        Modalities
+        </p>
+
         </div>
-
-        Imaging modalities
-
         """,
         unsafe_allow_html=True
         )
@@ -309,14 +241,16 @@ if user:
     with c3:
 
         st.markdown(
-        f"""
+        """
         <div class="card">
 
         <div class="metric">
-        Ready
+        Active
         </div>
 
-        Continue learning
+        <p>
+        Learning journey
+        </p>
 
         </div>
         """,
@@ -336,8 +270,7 @@ if user:
 
         cols = st.columns(3)
 
-
-        for col,case in zip(
+        for col, case in zip(
             cols,
             cases[:3]
         ):
@@ -372,8 +305,8 @@ if user:
         </h2>
 
         <p>
-        Add your first radiology case
-        to begin building your knowledge base.
+        Start adding cases to build your
+        personal radiology knowledge base.
         </p>
 
         </div>
@@ -382,38 +315,41 @@ if user:
         )
 
 
-# --------------------
-# Public landing
-# --------------------
+
+# Public landing page
 
 else:
-
 
     st.subheader(
         "How RadMentor helps"
     )
 
 
-    a,b,c = st.columns(3)
+    features = [
+        (
+            "Capture Cases",
+            "Document imaging findings and clinical lessons."
+        ),
+        (
+            "Review Knowledge",
+            "Strengthen diagnostic reasoning through repetition."
+        ),
+        (
+            "Build Expertise",
+            "Create your personal radiology learning system."
+        )
+    ]
 
 
-    for col,title,text in zip(
-        [a,b,c],
-        [
-            (
-            "Capture",
-            "Save important imaging cases."
-            ),
-            (
-            "Review",
-            "Strengthen diagnostic patterns."
-            ),
-            (
-            "Improve",
-            "Build your radiology memory."
-            )
-        ]
+    cols = st.columns(3)
+
+
+    for col, feature in zip(
+        cols,
+        features
     ):
+
+        title, text = feature
 
         with col:
 
@@ -433,3 +369,22 @@ else:
             """,
             unsafe_allow_html=True
             )
+
+
+
+st.markdown(
+"""
+<div class="footer">
+
+<h3>
+RadMentor
+</h3>
+
+<p>
+Case-based radiology learning platform
+</p>
+
+</div>
+""",
+unsafe_allow_html=True
+)
