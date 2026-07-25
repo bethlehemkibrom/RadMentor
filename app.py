@@ -7,7 +7,7 @@ from utils.preferences import get_accent_color, save_accent_color
 
 st.set_page_config(
     page_title="RadMentor",
-    page_icon="🩻",
+    page_icon="R",
     layout="wide"
 )
 
@@ -29,87 +29,175 @@ if accent != current_color:
 apply_theme(accent)
 
 
-# Design
+# Premium design system
 
 st.markdown(
 f"""
 <style>
 
+.main {{
+    background:#f8fafc;
+}}
+
+
 .hero {{
 
-background:
-linear-gradient(135deg,#ffffff,#eff6ff);
+    background:
+    linear-gradient(135deg,#ffffff,#eef6ff);
 
-padding:55px;
+    padding:70px 60px;
 
-border-radius:30px;
+    border-radius:32px;
 
-border:1px solid #e2e8f0;
+    border:1px solid #e2e8f0;
 
-box-shadow:
-0 15px 40px rgba(15,23,42,0.08);
+    box-shadow:
+    0 20px 50px rgba(15,23,42,0.08);
 
-text-align:center;
+    animation:fadeIn 1s ease;
 
 }}
 
 
 .hero h1 {{
 
-font-size:60px;
+    font-size:64px;
 
-color:{accent};
+    font-weight:800;
+
+    color:#0f172a;
+
+    margin-bottom:15px;
+
+}}
+
+
+.hero span {{
+
+    color:{accent};
 
 }}
 
 
 .hero p {{
 
-font-size:22px;
+    font-size:23px;
 
-color:#475569;
+    color:#475569;
 
-line-height:1.6;
+    max-width:850px;
 
-}}
-
-
-.action-card {{
-
-background:white;
-
-padding:30px;
-
-border-radius:24px;
-
-border:1px solid #e2e8f0;
-
-box-shadow:
-0 8px 25px rgba(0,0,0,0.05);
-
-min-height:220px;
+    line-height:1.6;
 
 }}
 
 
-.action-card h3 {{
+.primary-button {{
 
-color:{accent};
+    background:{accent};
+
+    color:white;
+
+    padding:14px 28px;
+
+    border-radius:14px;
+
+    font-weight:600;
 
 }}
 
 
-.empty-card {{
 
-background:#f8fafc;
+.feature-card {{
 
-padding:35px;
+    background:white;
 
-border-radius:25px;
+    padding:35px;
 
-text-align:center;
+    border-radius:24px;
 
-border:1px dashed #cbd5e1;
+    border:1px solid #e2e8f0;
+
+    min-height:230px;
+
+    transition:0.3s;
+
+}}
+
+
+.feature-card:hover {{
+
+    transform:translateY(-6px);
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,0.08);
+
+}}
+
+
+
+.feature-title {{
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+}}
+
+
+.feature-text {{
+
+    color:#64748b;
+
+    font-size:17px;
+
+    line-height:1.6;
+
+}}
+
+
+
+.empty-state {{
+
+    background:white;
+
+    padding:45px;
+
+    text-align:center;
+
+    border-radius:25px;
+
+    border:1px dashed #cbd5e1;
+
+}}
+
+
+
+.footer {{
+
+    text-align:center;
+
+    padding:40px;
+
+    color:#64748b;
+
+}}
+
+
+
+@keyframes fadeIn {{
+
+from {{
+opacity:0;
+transform:translateY(20px);
+}}
+
+to {{
+opacity:1;
+transform:translateY(0);
+}}
 
 }}
 
@@ -120,27 +208,27 @@ unsafe_allow_html=True
 
 
 
-# Hero
+# Hero section
 
 st.markdown(
 f"""
+
 <div class="hero">
 
 <h1>
-🩻 RadMentor
+Welcome to <span>RadMentor</span>
 </h1>
 
-<p>
-Your personal radiology learning workspace.
-</p>
 
 <p>
-Capture cases, reflect on findings,
-and build diagnostic confidence
-one image at a time.
+A personal radiology learning workspace designed
+to help you capture cases, organize knowledge,
+and strengthen diagnostic reasoning.
 </p>
+
 
 </div>
+
 """,
 unsafe_allow_html=True
 )
@@ -150,52 +238,56 @@ unsafe_allow_html=True
 st.write("")
 
 
+# Main actions
+
 st.subheader(
-"Start Your Radiology Journey"
+"Build your radiology knowledge"
 )
 
 
-c1,c2,c3 = st.columns(3)
+col1,col2,col3 = st.columns(3)
 
 
-items = [
+features = [
 
 (
-"🩻 Capture Cases",
-"Save important imaging cases, diagnoses, and teaching points."
+"Case Library",
+"Capture important imaging cases, findings, diagnoses, and teaching points in one organized workspace."
 ),
 
 (
-"📚 Review & Learn",
-"Return to cases and strengthen your diagnostic reasoning."
+"Learning Workspace",
+"Review cases, reflect on patterns, and develop a structured approach to interpretation."
 ),
 
 (
-"📊 Track Growth",
-"Build a personal record of your learning journey."
+"Knowledge Growth",
+"Create your personal radiology memory system through continuous learning."
 )
 
 ]
 
 
 for col,(title,text) in zip(
-    [c1,c2,c3],
-    items
+    [col1,col2,col3],
+    features
 ):
 
     with col:
 
         st.markdown(
         f"""
-        <div class="action-card">
+        <div class="feature-card">
 
-        <h3>
+        <div class="feature-title">
         {title}
-        </h3>
+        </div>
 
-        <p>
+        <br>
+
+        <div class="feature-text">
         {text}
-        </p>
+        </div>
 
         </div>
         """,
@@ -207,14 +299,16 @@ for col,(title,text) in zip(
 st.write("")
 
 
+# Empty state
+
 st.subheader(
-"Your Case Library"
+"Your Learning Space"
 )
 
 
 st.markdown(
 """
-<div class="empty-card">
+<div class="empty-state">
 
 <h2>
 No cases yet
@@ -225,7 +319,8 @@ Your saved radiology cases will appear here.
 </p>
 
 <p>
-Start by adding your first teaching case.
+Start by adding your first case and build your
+personal imaging knowledge library.
 </p>
 
 </div>
@@ -235,21 +330,13 @@ unsafe_allow_html=True
 
 
 
-st.write("")
-
-
 st.markdown(
-f"""
-<div class="hero">
+"""
+<div class="footer">
 
-<h2 style="color:{accent}">
-Every image is a learning opportunity.
-</h2>
-
-<p>
-RadMentor helps you transform clinical exposure
-into lasting radiology knowledge.
-</p>
+RadMentor  
+<br>
+Structured learning for modern radiology education
 
 </div>
 """,
