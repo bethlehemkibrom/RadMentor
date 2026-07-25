@@ -1,3 +1,4 @@
+
 import streamlit as st
 
 
@@ -48,8 +49,15 @@ def info_card(title, text, *args, **kwargs):
             padding:22px;
             margin-bottom:18px;
         ">
-        <h3>{title}</h3>
-        <p>{text}</p>
+
+        <h3 style="color:#111827;">
+        {title}
+        </h3>
+
+        <p style="color:#374151;">
+        {text}
+        </p>
+
         </div>
         """,
         unsafe_allow_html=True
@@ -66,9 +74,19 @@ def stat_card(label, value, description=""):
             border-radius:16px;
             padding:20px;
         ">
-        <div>{label}</div>
-        <h2>{value}</h2>
-        <small>{description}</small>
+
+        <p style="color:#6B7280;">
+        {label}
+        </p>
+
+        <h2 style="color:#111827;">
+        {value}
+        </h2>
+
+        <small style="color:#6B7280;">
+        {description}
+        </small>
+
         </div>
         """,
         unsafe_allow_html=True
@@ -79,13 +97,18 @@ def section_title(title):
 
     st.markdown(
         f"""
-        <h2>{title}</h2>
+        <h2 style="
+            color:#111827;
+            margin-top:30px;
+        ">
+        {title}
+        </h2>
         """,
         unsafe_allow_html=True
     )
 
 
-def empty_state(title, message):
+def empty_state(title, message=""):
 
     st.markdown(
         f"""
@@ -97,7 +120,9 @@ def empty_state(title, message):
             text-align:center;
         ">
 
-        <h3>{title}</h3>
+        <h3 style="color:#111827;">
+        {title}
+        </h3>
 
         <p style="color:#6B7280;">
         {message}
