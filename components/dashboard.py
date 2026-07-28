@@ -65,6 +65,8 @@ def dashboard(user=None, cases=None):
     )
 
 
-    growth_chart()
+    growth_chart(
+        learning_stats
+    )
 
     quick_actions()

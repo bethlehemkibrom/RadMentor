@@ -2,7 +2,27 @@
 import streamlit as st
 
 
-def growth_chart():
+def growth_chart(stats=None):
+
+    if stats is None:
+        stats = {}
+
+    reviewed = stats.get("reviewed", 0)
+    pending = stats.get("pending", 0)
+
+    modalities = stats.get(
+        "modalities",
+        {}
+    )
+
+    top_modality = "None"
+
+    if modalities:
+        top_modality = max(
+            modalities,
+            key=modalities.get
+        )
+
 
     st.markdown(
         """
@@ -22,103 +42,25 @@ def growth_chart():
     )
 
 
-    c1, c2 = st.columns(2)
+    c1, c2, c3 = st.columns(3)
 
 
     with c1:
-
-        st.markdown(
-            """
-            <div style="
-                background:white;
-                border-radius:20px;
-                padding:25px;
-                border:1px solid #E5E7EB;
-                box-shadow:0 6px 18px rgba(0,0,0,.06);
-            ">
-
-            <h3 style="color:#0F172A;">
-            Learning Progress
-            </h3>
-
-            <p>MRI Interpretation</p>
-
-            <div style="
-                background:#E2E8F0;
-                border-radius:10px;
-                height:12px;
-            ">
-                <div style="
-                    background:#2563EB;
-                    width:80%;
-                    height:12px;
-                    border-radius:10px;
-                "></div>
-            </div>
-
-            <p style="margin-top:15px;">
-            CT Interpretation
-            </p>
-
-            <div style="
-                background:#E2E8F0;
-                border-radius:10px;
-                height:12px;
-            ">
-                <div style="
-                    background:#2563EB;
-                    width:65%;
-                    height:12px;
-                    border-radius:10px;
-                "></div>
-            </div>
-
-            </div>
-            """,
-            unsafe_allow_html=True,
+        st.metric(
+            "Cases Reviewed",
+            reviewed
         )
 
 
     with c2:
+        st.metric(
+            "Pending Review",
+            pending
+        )
 
-        st.markdown(
-            """
-            <div style="
-                background:white;
-                border-radius:20px;
-                padding:25px;
-                border:1px solid #E5E7EB;
-                box-shadow:0 6px 18px rgba(0,0,0,.06);
-            ">
 
-            <h3 style="color:#0F172A;">
-            Learning Activity
-            </h3>
-
-            <h1 style="
-                color:#1E3A8A;
-                margin-bottom:5px;
-            ">
-            7
-            </h1>
-
-            <p style="color:#64748B;">
-            Day learning streak
-            </p>
-
-            <hr>
-
-            <h2 style="
-                color:#1E3A8A;
-            ">
-            24
-            </h2>
-
-            <p style="color:#64748B;">
-            Cases reviewed
-            </p>
-
-            </div>
-            """,
-            unsafe_allow_html=True,
+    with c3:
+        st.metric(
+            "Most Studied Modality",
+            top_modality
         )
