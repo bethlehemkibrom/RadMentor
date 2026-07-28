@@ -10,6 +10,7 @@ from components.quick_actions import quick_actions
 from components.growth_chart import growth_chart
 
 from utils.dashboard_data import get_dashboard_stats
+from utils.analytics import calculate_learning_stats
 
 
 def dashboard(user=None, cases=None):
@@ -19,6 +20,8 @@ def dashboard(user=None, cases=None):
 
 
     stats = get_dashboard_stats(cases)
+
+    learning_stats = calculate_learning_stats(cases)
 
 
     hero(user)
