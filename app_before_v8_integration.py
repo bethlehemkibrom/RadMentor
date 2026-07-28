@@ -1,6 +1,5 @@
 
 import streamlit as st
-from components.dashboard import dashboard
 
 from utils.theme import apply_theme
 from utils.preferences import get_accent_color, save_accent_color
@@ -145,12 +144,8 @@ unsafe_allow_html=True
 
 if user:
 
-    dashboard(
-    user,
-    cases
-)
-
-    st.stop()
+    title = "Welcome back"
+    subtitle = "Your personal radiology learning workspace."
 
 else:
 
