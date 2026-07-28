@@ -53,6 +53,7 @@ if supabase:
 
         cases = response.data or []
 
+
     except Exception:
 
         cases = []
@@ -98,63 +99,56 @@ st.subheader(
 
 for case in review_cases:
 
-
-    st.markdown(
-        """
-        <div style="
-        background:white;
-        padding:25px;
-        border-radius:20px;
-        border:1px solid #E2E8F0;
-        box-shadow:0 5px 18px rgba(0,0,0,.05);
-        ">
-        """,
-        unsafe_allow_html=True
-    )
-
-
-    st.markdown(
-        f"### {case.get('diagnosis','Unknown Diagnosis')}"
-    )
-
-
-    c1, c2, c3 = st.columns(3)
-
-
-    with c1:
-        st.write(
-            f"**Modality**  \n{case.get('modality','-')}"
-        )
-
-    with c2:
-        st.write(
-            f"**Priority**  \n{case.get('priority','Normal')}"
-        )
-
-    with c3:
-        st.write(
-            f"**Status**  \n{case.get('review_status','Not reviewed')}"
-        )
-
-
-    if case.get("teaching_pearls"):
-
-        st.info(
-            case["teaching_pearls"]
-        )
-
-
-    if case.get("reference_link"):
+    with st.container():
 
         st.markdown(
-            f"[Open Reference]({case['reference_link']})"
+            f"""
+            <div style="
+            background:white;
+            padding:25px;
+            border-radius:20px;
+            border:1px solid #E2E8F0;
+            box-shadow:0 5px 18px rgba(0,0,0,.05);
+            ">
+            
+            <h3>
+            {case.get('diagnosis','Unknown Diagnosis')}
+            </h3>
+
+            <p>
+            <b>Modality:</b> {case.get('modality','-')}
+            </p>
+
+            <p>
+            <b>Body System:</b> {case.get('body_system','-')}
+            </p>
+
+            <p>
+            <b>Priority:</b> {case.get('priority','Normal')}
+            </p>
+
+            <p>
+            <b>Status:</b> {case.get('review_status','Not reviewed')}
+            </p>
+
+            </div>
+            """,
+            unsafe_allow_html=True
         )
 
 
-    st.markdown(
-        "</div>",
-        unsafe_allow_html=True
-    )
+        if case.get("teaching_pearls"):
+
+            st.info(
+                case["teaching_pearls"]
+            )
 
 
-    st.write("")
+        if case.get("reference_link"):
+
+            st.markdown(
+                f"[Open Reference]({case['reference_link']})"
+            )
+
+
+        st.divider()
