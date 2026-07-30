@@ -11,7 +11,7 @@ apply_theme(get_accent_color())
 
 
 page_header(
-    "",
+    "🔁",
     "Review Queue",
     "Revisit important cases and strengthen your radiology memory."
 )

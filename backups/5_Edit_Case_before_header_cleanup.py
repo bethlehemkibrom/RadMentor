@@ -11,7 +11,7 @@ apply_theme(get_accent_color())
 
 
 page_header(
-    "",
+    "📝",
     "Edit Case",
     "Update and improve your radiology learning cases."
 )

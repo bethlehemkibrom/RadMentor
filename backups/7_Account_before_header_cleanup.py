@@ -6,7 +6,7 @@ from utils.supabase_client import supabase
 
 st.set_page_config(
     page_title="Account | RadMentor",
-    page_icon=""
+    page_icon="🩻"
 )
 
 

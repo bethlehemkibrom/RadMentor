@@ -11,7 +11,7 @@ apply_theme(get_accent_color())
 
 
 page_header(
-    "",
+    "📊",
     "Learning Dashboard",
     "Track your radiology learning journey."
 )
