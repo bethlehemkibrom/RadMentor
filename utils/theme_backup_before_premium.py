@@ -14,12 +14,14 @@ TEXT_SECONDARY = "#64748B"
 BORDER = "#E2E8F0"
 
 
+
 def apply_theme(accent_color=PRIMARY):
 
     css = f"""
+
     <style>
 
-    /* ===== Main App ===== */
+    /* Main background */
 
     .stApp {{
         background:
@@ -32,13 +34,17 @@ def apply_theme(accent_color=PRIMARY):
         color:{TEXT};
     }}
 
+
+    /* Remove top padding */
+
     .block-container {{
-        max-width:1250px;
         padding-top:2rem;
         padding-bottom:3rem;
+        max-width:1200px;
     }}
 
-    /* ===== Sidebar ===== */
+
+    /* Sidebar */
 
     section[data-testid="stSidebar"] {{
 
@@ -53,36 +59,44 @@ def apply_theme(accent_color=PRIMARY):
 
     }}
 
-    section[data-testid="stSidebar"] * {{
-        color:{TEXT};
+
+    section[data-testid="stSidebar"] h1 {{
+
+        color:{PRIMARY};
+
     }}
 
-    /* ===== Headings ===== */
+
+
+    /* Headers */
 
     h1 {{
-        font-size:52px !important;
+
+        font-size:48px !important;
         font-weight:800 !important;
         letter-spacing:-1px;
-        color:{TEXT};
+
     }}
+
 
     h2 {{
+
         font-weight:700 !important;
-        color:{TEXT};
+
     }}
+
 
     h3 {{
+
         font-weight:700 !important;
-        color:{TEXT};
+
     }}
 
-    p {{
-        color:{TEXT_SECONDARY};
-    }}
 
-    /* ===== Buttons ===== */
 
-    .stButton > button {{
+    /* Buttons */
+
+    .stButton button {{
 
         background:
         linear-gradient(
@@ -97,85 +111,98 @@ def apply_theme(accent_color=PRIMARY):
 
         border-radius:14px;
 
-        padding:0.65rem 1.4rem;
+        padding:
+        0.6rem 1.5rem;
 
         font-weight:700;
 
-        transition:0.25s;
+        transition:.2s;
 
     }}
 
-    .stButton > button:hover {{
+
+    .stButton button:hover {{
 
         transform:translateY(-2px);
 
         box-shadow:
-        0 10px 25px rgba(37,99,235,.30);
+        0 8px 20px rgba(37,99,235,.25);
 
     }}
 
-    /* ===== Inputs ===== */
+
+
+    /* Inputs */
 
     .stTextInput input,
     .stTextArea textarea,
-    .stSelectbox div[data-baseweb="select"] {{
+    .stSelectbox div {{
 
-        border-radius:12px !important;
+        border-radius:12px;
+
         border:1px solid {BORDER};
 
     }}
 
-    /* ===== Metric Cards ===== */
+
+
+    /* Cards */
+
+    .card {{
+
+        background:{CARD};
+
+        border-radius:22px;
+
+        border:
+        1px solid {BORDER};
+
+        padding:25px;
+
+        box-shadow:
+        0 10px 30px
+        rgba(15,23,42,.06);
+
+    }}
+
+
+
+    /* Metrics */
 
     div[data-testid="metric-container"] {{
 
         background:white;
 
-        border-radius:20px;
+        border-radius:18px;
 
         padding:20px;
 
-        border:1px solid {BORDER};
+        border:
+        1px solid {BORDER};
 
         box-shadow:
-        0 10px 25px rgba(15,23,42,.05);
+        0 8px 25px
+        rgba(15,23,42,.05);
 
     }}
 
-    /* ===== Expanders ===== */
 
-    .streamlit-expanderHeader {{
 
-        font-weight:700;
-
-    }}
-
-    /* ===== Tables ===== */
-
-    .stDataFrame {{
-
-        border-radius:18px;
-
-    }}
-
-    /* ===== Horizontal Rule ===== */
-
-    hr {{
-        border:none;
-        border-top:1px solid {BORDER};
-    }}
-
-    /* ===== Hide Streamlit Branding ===== */
+    /* Hide Streamlit footer */
 
     footer {{
+
         visibility:hidden;
+
     }}
 
-    #MainMenu {{
-        visibility:hidden;
-    }}
+
 
     </style>
+
     """
 
-    st.markdown(css, unsafe_allow_html=True)
+    st.markdown(
+        css,
+        unsafe_allow_html=True
+    )
