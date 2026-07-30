@@ -154,29 +154,96 @@ if user:
 
 else:
 
-    title = "Your radiology <span>learning workspace</span>"
-    subtitle = (
-        "Capture cases, organize imaging knowledge, "
-        "and develop stronger diagnostic reasoning."
+    st.markdown(
+    f"""
+    <div class="hero">
+
+    <h1>
+    🩻 Rad<span style="color:{accent}">
+    Mentor
+    </span>
+    </h1>
+
+    <h2>
+    Your intelligent radiology learning companion
+    </h2>
+
+    <p>
+    Capture clinical cases, organize imaging knowledge,
+    and build stronger diagnostic reasoning through
+    case-based learning.
+    </p>
+
+    </div>
+    """,
+    unsafe_allow_html=True
     )
 
 
-st.markdown(
-f"""
-<div class="hero">
+    st.write("")
 
-<h1>
-{title}
-</h1>
 
-<p>
-{subtitle}
-</p>
+    cols = st.columns(3)
 
-</div>
-""",
-unsafe_allow_html=True
-)
+    features = [
+        (
+            "📚 Case Library",
+            "Save imaging cases and build your personal radiology knowledge base."
+        ),
+        (
+            "🧠 Diagnostic Memory",
+            "Strengthen pattern recognition through repeated case review."
+        ),
+        (
+            "📈 Learning Analytics",
+            "Track your progress and understand your growth."
+        )
+    ]
+
+
+    for col, feature in zip(cols, features):
+
+        title, text = feature
+
+        with col:
+
+            st.markdown(
+            f"""
+            <div class="card">
+
+            <h3>
+            {title}
+            </h3>
+
+            <p>
+            {text}
+            </p>
+
+            </div>
+            """,
+            unsafe_allow_html=True
+            )
+
+
+    st.write("")
+
+
+    st.markdown(
+    """
+    <div class="hero">
+
+    <h2>
+    Built for radiology learners
+    </h2>
+
+    <p>
+    Case-based learning • Imaging-focused education • Personalized growth
+    </p>
+
+    </div>
+    """,
+    unsafe_allow_html=True
+    )
 
 
 st.write("")
