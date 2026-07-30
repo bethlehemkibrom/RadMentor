@@ -159,7 +159,7 @@ else:
     <div class="hero">
 
     <h1>
-    🩻 Rad<span style="color:{accent}">
+    Rad<span style="color:{accent}">
     Mentor
     </span>
     </h1>
@@ -187,15 +187,15 @@ else:
 
     features = [
         (
-            "📚 Case Library",
+            "Case Library",
             "Save imaging cases and build your personal radiology knowledge base."
         ),
         (
-            "🧠 Diagnostic Memory",
+            "Diagnostic Memory",
             "Strengthen pattern recognition through repeated case review."
         ),
         (
-            "📈 Learning Analytics",
+            "Learning Analytics",
             "Track your progress and understand your growth."
         )
     ]
